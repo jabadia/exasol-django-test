@@ -5,12 +5,14 @@ django_exabackend
 pyodbc==3.0.10
 
 1. create a new Django project (using pycharm)
-2. configure exasol driver
+2. configure exasol driver in settings.py
 3. create an 'app' inside the project
-    python manage.py startapp main
-    navigating to http://127.0.0.1/main/ should give you an 'hi there!' message
+```
+    $ python manage.py startapp main    
+```
+navigating to http://127.0.0.1/main/ should give you an 'hi there!' message
 
-4. manually create the following table
+4. manually create the following table in the testing EXAsol instance
 
         CREATE OR REPLACE TABLE "TEST"."PRODUCTS_PERMISSIONS"
         -- one entry for each permission_group/webshop/country
@@ -42,11 +44,11 @@ and insert some test data
     ('adidas', 'ru', 'pg2', FALSE),
     ('adidas', 'pt', 'pg2', FALSE);
 
-5. create a model 'managed=False' so that Django doesn't try to mess with the table definition
+5. create a model 'managed=False' so that Django doesn't try to mess with the table definition (main/models.py)
 
-6. check that it is working by navigating to http://127.0.0.1/main/rows/
+6. check that it is working by navigating to http://127.0.0.1/main/rows/ (main/views.py)
 
-7. use the unit testing capabilities of django
+7. use the unit testing capabilities of django (main/test.py)
 ```
     $ python manage.py test    
 ```
