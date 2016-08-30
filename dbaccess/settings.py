@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'main',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -89,7 +90,7 @@ DATABASES = {
         'NAME': 'EXA_DB',
         'USER': secrets.user,
         'PASSWORD': secrets.password,
-        'HOST': secrets.host,
+        'EXAHOST': secrets.host,
         'DSN': 'EXASolution',
         'CONNECTIONLCCTYPE': 'en_US.UTF-8',
         'INTTYPESINRESULTSIFPOSSIBLE': 'y',
@@ -97,6 +98,9 @@ DATABASES = {
 
 }
 
+DATABASE_ROUTERS = [
+    'main.db_router.DbRouter',
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
