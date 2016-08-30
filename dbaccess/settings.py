@@ -139,3 +139,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# Unit testing configuration
+
+# custom TestRunner that can skip TEST database creation for certain connections as configured in READ_ONLY_DATABASES
+TEST_RUNNER = "main.read_only_db_test_runner.ReadOnlyDatabasesTestRunner"
+
+# our custom TestRunner will not create TEST databases for these ones, they are assumed to be read-only
+READ_ONLY_DATABASES = ['exasol_db']

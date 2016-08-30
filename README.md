@@ -46,4 +46,7 @@ and insert some test data
 
 6. check that it is working by navigating to http://127.0.0.1/main/rows/
 
-
+7. use the unit testing capabilities of django
+```
+    $ python manage.py test    
+```
