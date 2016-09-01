@@ -1,7 +1,6 @@
-from django.db import models
 from django.test import TestCase
-from django.db import connections
-
+from django.db import models, connections
+from django.db.models import Max
 from django.db.utils import DatabaseError
 
 """
@@ -118,6 +117,24 @@ class DbWriteTest(TestCase):
 
         self._insert_element('elcorteingles','es','pg3',True)
         self.assertEqual(inserted_count+1, TestProductsPermissions.objects.all().count())
+
+    def test_write_and_return_identity(self):
+
+        # insert some data
+        TestProductsPermissions(webshop_id='w1', country_code='c1',permission_group='pg1', enabled=True).save()
+        TestProductsPermissions(webshop_id='w2', country_code='c2',permission_group='pg2', enabled=True).save()
+        TestProductsPermissions(webshop_id='w3', country_code='c3',permission_group='pg3', enabled=True).save()
+
+        max_id = TestProductsPermissions.objects.aggregate(max_id=Max('id'))['max_id']
+
+        p = TestProductsPermissions()
+        p.webshop_id = 'lululemon'
+        p.country_code = 'ch'
+        p.permission_group = 'pg100'
+        p.enabled = True
+        p.save()
+
+        self.assertGreater(p.id, max_id)
 
     def test_write_integrity_error(self):
         inserted_count = self._insert_some_data()
