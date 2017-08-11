@@ -148,16 +148,13 @@ class DbWriteTest(TestCase):
 
         self.assertEqual(TestProductsPermissions.objects.all().count(), 1 + inserted_count)
 
-        try:
-            with self.assertRaisesRegexp(DatabaseError, "constraint violation - primary key"):
-                p2 = TestProductsPermissions()
-                p2.webshop_id = 'lululemon'
-                p2.country_code = 'ch'
-                p2.permission_group = 'pg100'
-                p2.enabled = False
-                p2.save()
-        except DatabaseError:
-            print "database error"
+        with self.assertRaisesRegexp(StandardError, "constraint violation - primary key"):
+            p2 = TestProductsPermissions()
+            p2.webshop_id = 'lululemon'
+            p2.country_code = 'ch'
+            p2.permission_group = 'pg100'
+            p2.enabled = False
+            p2.save()
 
         self.assertEqual(TestProductsPermissions.objects.all().count(), 1 + inserted_count)
 
